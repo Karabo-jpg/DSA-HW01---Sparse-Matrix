@@ -2,9 +2,8 @@
 # Author: Karabo Ojiambo
 # Date: May 21, 2025
 # Description: Implementation of a Sparse Matrix class for DSA-HW01 assignment.
-# This code reads sparse matrices from files, performs addition, subtraction, and multiplication,
-# and handles input variations as per assignment requirements. No external libraries beyond
-# standard Python are used, adhering to the constraint of custom implementation.
+# This code reads sparse matrices from files, performs addition, subtraction, and multiplication.
+
 
 class SparseMatrix:
     def __init__(self, matrix_file_path=None, num_rows=None, num_cols=None):
@@ -117,11 +116,9 @@ class SparseMatrix:
         """
         if self.rows != other.rows or self.cols != other.cols:
             raise ValueError("Matrix dimensions do not match for addition")
-        result = SparseMatrix(self.rows, self.cols)
-        # Copy elements from self
+        result = SparseMatrix(num_rows=self.rows, num_cols=self.cols)
         for row, col, value in self.elements:
             result.set_element(row, col, value)
-        # Add elements from other
         for row, col, value in other.elements:
             current_val = result.get_element(row, col)
             result.set_element(row, col, current_val + value)
@@ -141,7 +138,7 @@ class SparseMatrix:
         """
         if self.rows != other.rows or self.cols != other.cols:
             raise ValueError("Matrix dimensions do not match for subtraction")
-        result = SparseMatrix(self.rows, self.cols)
+        result = SparseMatrix(num_rows=self.rows, num_cols=self.cols)
         for row, col, value in self.elements:
             result.set_element(row, col, value)
         for row, col, value in other.elements:
@@ -163,7 +160,7 @@ class SparseMatrix:
         """
         if self.cols != other.rows:
             raise ValueError("Matrix dimensions do not match for multiplication")
-        result = SparseMatrix(self.rows, other.cols)
+        result = SparseMatrix(num_rows=self.rows, num_cols=other.cols)
         for i1, j1, v1 in self.elements:
             for i2, j2, v2 in other.elements:
                 if j1 == i2:  # Matching columns and rows for multiplication
@@ -190,12 +187,12 @@ def main():
         file1 = input("Enter path to first matrix file: ").strip()
         file2 = input("Enter path to second matrix file: ").strip()
 
-        matrix1 = SparseMatrix(file1)
-        matrix2 = SparseMatrix(file2)
+        matrix1 = SparseMatrix(matrix_file_path=file1)
+        matrix2 = SparseMatrix(matrix_file_path=file2)
 
         print("Select operation:\n1. Addition\n2. Subtraction\n3. Multiplication")
         choice_input = input("Enter choice (1-3): ").strip()
-        choice = int(choice_input)  # Convert to int after stripping
+        choice = int(choice_input)
 
         result = None
         if choice == 1:
