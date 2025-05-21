@@ -194,9 +194,8 @@ def main():
         matrix2 = SparseMatrix(file2)
 
         print("Select operation:\n1. Addition\n2. Subtraction\n3. Multiplication")
-        choice = int(input("Enter choice (1-3): "))
-        # Clear the input buffer to prevent Bad File Descriptor error
-        input()  # Consume the leftover newline
+        choice_input = input("Enter choice (1-3): ").strip()
+        choice = int(choice_input)  # Convert to int after stripping
 
         result = None
         if choice == 1:
